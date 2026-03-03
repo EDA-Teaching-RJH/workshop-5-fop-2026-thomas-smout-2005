@@ -4,39 +4,37 @@ import math
 # When printing the results, or an updates in price, it uses a print(f) command to read the integer and output it
 # Program should only accept an integer input at any point but should be able to check if input is or isn't an integer
 
-print("This machine only takes 50p, 20p, 10p and 5p")
+def main():
+    print("This machine only takes 50p, 20p, 10p and 5p")
+    current = 0
+    while current < 75:
+        coin = get_coin()
+        current = update_total(current, coin)
+    dispense_product(current)
+    
 
-
-while True:
-    try:
-        current_value = int(input("Insert coin : "))
-        if current_value == 5 or current_value == 10 or current_value == 20 or current_value == 50:
-            break
-        else:
-            print("Please enter a coin this machine accepts")
-    except ValueError:
-        print("Invalid! Input must be a whole number")
-
-
-remaining = 75 - current_value
-
-while current_value < 75:
-    coins = 0
-    try:
-        print(f"You still need to insert {remaining}p")
-        
-        while True:
-            coins = int(input("Insert coin : "))
-            if coins == 5 or coins == 10 or coins == 20 or coins == 50:
+def get_coin():
+    while True:
+        try:
+            current_value = int(input("Insert coin : "))
+            if current_value == 5 or current_value == 10 or current_value == 20 or current_value == 50:
                 break
             else:
                 print("Please enter a coin this machine accepts")
-
-    except ValueError:
-        print("Invalid! Input must be a whole number")
-    
-    current_value = current_value + coins
-    remaining = 75 - current_value
+        except ValueError:
+            print("Invalid! Input must be a whole number")
+    return current_value
 
 
-print(f"Heres your coffee and your change of {-remaining}p")
+def update_total(current, coin):
+    current = current + coin
+    remaining = 75 - current
+    print(f"You still need to insert {remaining}p")
+    return current
+
+
+def dispense_product(current):
+    remaining = 75 - current
+    print(f"Heres your coffee and your change of {-remaining}p")
+
+main()
